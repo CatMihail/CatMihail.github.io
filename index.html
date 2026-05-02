@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb;
+    --bg2: #edeae0;
+    --ink: #1a1814;
+    --ink2: #5a5750;
+    --ink3: #9a9690;
+    --accent: #2d4a3e;
+    --accent2: #c8a96e;
+    --border: rgba(26,24,20,0.12);
+    --border2: rgba(26,24,20,0.06);
+    --card: #fffdf8;
+    --tag-bg: rgba(200,169,110,0.15);
+    --tag-fg: #7a5c20;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141210;
+      --bg2: #1c1a17;
+      --ink: #f0ece2;
+      --ink2: #9a9690;
+      --ink3: #5a5750;
+      --accent: #6bbf9a;
+      --accent2: #c8a96e;
+      --border: rgba(240,236,226,0.10);
+      --border2: rgba(240,236,226,0.05);
+      --card: #1c1a17;
+      --tag-bg: rgba(200,169,110,0.12);
+      --tag-fg: #c8a96e;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 2.5rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.5px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  nav a {
+    font-size: 13px;
+    color: var(--ink2);
+    text-decoration: none;
+    margin-left: 2rem;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--ink); }
+
+  .hero {
+    padding: 9rem 2.5rem 5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 4rem;
+    align-items: end;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent2);
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.75rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--ink2);
+    max-width: 520px;
+  }
+  .hero-meta {
+    border-left: 2px solid var(--border);
+    padding-left: 1.75rem;
+    padding-bottom: 0.5rem;
+  }
+  .hero-meta p {
+    font-size: 13px;
+    color: var(--ink3);
+    line-height: 2.2;
+    font-family: 'DM Mono', monospace;
+  }
+  .hero-meta strong {
+    color: var(--ink);
+    font-weight: 500;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 14px;
+  }
+
+  .section-label {
+    max-width: 1100px;
+    margin: 5rem auto 2.5rem;
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .section-label span {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    white-space: nowrap;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  /* Grid */
+  .projects {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2.5rem 6rem;
+    display: grid;
+    gap: 1.5px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .project-card {
+    background: var(--card);
+    padding: 2rem 2rem 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    transition: background 0.2s;
+    cursor: default;
+    position: relative;
+  }
+  .project-card:hover { background: color-mix(in srgb, var(--card) 60%, var(--bg2)); }
+
+  .project-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink3);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .project-abstract {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink2);
+    margin-bottom: 1.25rem;
+    max-width: 680px;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    background: var(--tag-bg);
+    color: var(--tag-fg);
+    border-radius: 4px;
+    padding: 3px 10px;
+    letter-spacing: 0.04em;
+  }
+  .project-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    padding-top: 1.5rem;
+  }
+  .btn-preview {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    border-radius: 6px;
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .btn-preview:hover {
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border-color: var(--accent);
+  }
+  .btn-preview svg { width: 13px; height: 13px; flex-shrink: 0; }
+  .btn-pdf {
+    font-size: 11px;
+    color: var(--ink3);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+    padding: 0;
+  }
+  .btn-pdf:hover { color: var(--ink2); }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(10,8,6,0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    backdrop-filter: blur(4px);
+  }
+  .overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .preview-modal {
+    width: 100%;
+    max-width: 780px;
+    max-height: 88vh;
+    background: var(--card);
+    border-radius: 16px;
+    border: 0.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(24px) scale(0.97);
+    transition: transform 0.28s cubic-bezier(0.22,1,0.36,1);
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.28);
+  }
+  .overlay.open .preview-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  /* Top bar */
+  .modal-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1.25rem;
+    border-bottom: 0.5px solid var(--border);
+    flex-shrink: 0;
+  }
+  .modal-dots { display: flex; gap: 7px; }
+  .modal-dots span {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--border);
+    display: inline-block;
+  }
+  .modal-dots span:nth-child(1) { background: #ff6058; }
+  .modal-dots span:nth-child(2) { background: #ffbe2e; }
+  .modal-dots span:nth-child(3) { background: #28ca42; }
+  .modal-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink3);
+    letter-spacing: 0.05em;
+    flex: 1;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 1rem;
+  }
+  .btn-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink3);
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+  .btn-close:hover { color: var(--ink); }
+  .btn-close svg { width: 16px; height: 16px; }
+
+  /* Document body */
+  .modal-doc {
+    overflow-y: auto;
+    flex: 1;
+    padding: 2.5rem 3rem;
+    scroll-behavior: smooth;
+  }
+
+  /* Page simulation */
+  .doc-page {
+    background: #fffef9;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 3rem 3.5rem;
+    margin-bottom: 1.5rem;
+    min-height: 580px;
+    position: relative;
+  }
+  @media (prefers-color-scheme: dark) {
+    .doc-page { background: #222018; }
+  }
+  .doc-page-num {
+    position: absolute;
+    bottom: 1.25rem;
+    right: 1.75rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink3);
+  }
+  .doc-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .doc-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .doc-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.55rem;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .doc-authors {
+    font-size: 13px;
+    color: var(--ink2);
+    margin-top: 0.5rem;
+  }
+  .doc-abstract-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 0.5rem;
+    margin-top: 1.75rem;
+  }
+  .doc-abstract-text {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--ink2);
+    border-left: 2px solid var(--border);
+    padding-left: 1rem;
+    font-style: italic;
+  }
+  .doc-section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin: 2rem 0 0.75rem;
+  }
+  .doc-body {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--ink2);
+  }
+  .doc-figure {
+    margin: 1.75rem 0;
+    padding: 1.25rem;
+    background: var(--bg2);
+    border-radius: 8px;
+    border: 0.5px solid var(--border2);
+  }
+  .doc-figure-inner {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.4;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink3);
+    letter-spacing: 0.06em;
+  }
+  .doc-caption {
+    font-size: 12px;
+    color: var(--ink3);
+    text-align: center;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  /* Footer */
+  .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    border-top: 0.5px solid var(--border);
+    flex-shrink: 0;
+    gap: 1rem;
+  }
+  .page-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .page-nav button {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 5px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 5px;
+    background: transparent;
+    color: var(--ink2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .page-nav button:hover { background: var(--bg2); color: var(--ink); }
+  .page-nav button:disabled { opacity: 0.35; cursor: default; }
+  .page-indicator {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink3);
+    min-width: 60px;
+    text-align: center;
+  }
+  .modal-dl {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    border-radius: 5px;
+    transition: all 0.15s;
+  }
+  .modal-dl:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  .modal-dl svg { width: 13px; height: 13px; }
+
+  footer {
+    padding: 3rem 2.5rem;
+    border-top: 0.5px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  footer p {
+    font-size: 13px;
+    color: var(--ink3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-meta { border-left: none; border-top: 0.5px solid var(--border); padding-left: 0; padding-top: 1.5rem; }
+    .project-card { grid-template-columns: 1fr; }
+    .project-actions { flex-direction: row; align-items: center; padding-top: 0; }
+    .modal-doc { padding: 1.5rem; }
+    .doc-page { padding: 1.75rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">Catalina Mihail</a>
+  <nav>
+    <a href="#research">Research</a>
+    <a href="mailto:catalina.a.costache@gmail.ch">Contact</a>
+    <a href="https://github.com/CatMihail" target="_blank">GitHub ↗</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <p class="hero-eyebrow">M.Sc. Research Portfolio</p>
+    <h1>Multimedia Technologies<br>in Biometrics<em>and Information Security Applications</em></h1>
+       
+    <p class="hero-desc">
+      A curated collection of research conducted during my master's program at Faculty of Electronics, 
+      Telecommunications, and Information Technology of the National University of Science and 
+      Technology POLITEHNICA Bucharest.
+    </p>
+  </div>
+  <div class="hero-meta">
+    <p>Program<br><strong>M.Sc. Electronics, 
+      Telecommunications, and Information Technology </strong></p>
+    <p>Institution<br><strong>UNSTPB</strong></p>
+    <p>Years<br><strong>2024 – 2026</strong></p>
+  </div>
+</section>
+
+<div class="section-label" style="max-width:1100px;margin:2rem auto 1.5rem;padding:0 2.5rem;">
+  <span>Research Projects</span>
+</div>
+
+<div class="projects" style="margin:0 auto 4rem;max-width:1100px;">
+
+  <article class="project-card" data-project="0">
+    <div>
+      <p class="project-num">01 / 2025 · AI (II)</p>
+      <h2 class="project-title">Building Video Super-Resolution from the Ground Up: A Modular Pipeline Approach</h2>
+      <p class="project-abstract">
+        Alignment-based VSR decisively beats single-image methods — our enhanced FRVSR (16 residual blocks) 
+        hit PSNR 33.24/SSIM 0.924, and adding PCD deformable convolutions pushed that further to 33.68/SSIM 0.929. 
+        Fine-tuning on real H.265 compressed content proved essential — without it, models collapsed under heavy 
+        compression (PSNR crashing from 28.90 at QP17 to 24.17 at QP37). Integrating a spatio-temporal discriminator 
+        with optical flow estimation delivered measurably stronger temporal consistency, though the key unsolved tension 
+        remains: every accuracy gain costs real-time speed.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Single Image Super Resolution</span>
+        <span class="tag">Video Super Resolution</span>
+        <span class="tag">ICME 2025 Grand Challenge on VSR</span>
+      </div>
+    </div>
+    <div class="project-actions">
+      <button class="btn-preview" onclick="openPreview(0)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="2" width="12" height="12" rx="2"/>
+          <path d="M5 6h6M5 8.5h4"/>
+        </svg>
+        Open Preview
+      </button>
+      <button class="btn-pdf">Download PDF</button>
+    </div>
+  </article>
+
+  <article class="project-card" data-project="1">
+    <div>
+      <p class="project-num">01 / 2026 · PICSC</p>
+      <h2 class="project-title">Network Traffic Discrimination: VoIP vs. Non-VoIP Classification</h2>
+      <p class="project-abstract">
+        Short flows + strict bidirectional filtering unlock peak VoIP detection — early traffic tells the whole story.
+        Performance drops fast with longer flows, as signal fades into noise.
+        Best results demand model-specific tuning: synthetic sampling and PCA boost neural nets, but hurt models like SVM and RF.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Network Traffic Analysis</span>
+        <span class="tag">VoIP Traffic</span>
+        <span class="tag">MLP, SVM, RF</span>
+      </div>
+    </div>
+    <div class="project-actions">
+      <button class="btn-preview" onclick="openPreview(1)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="2" width="12" height="12" rx="2"/>
+          <path d="M5 6h6M5 8.5h4"/>
+        </svg>
+        Open Preview
+      </button>
+      <button class="btn-pdf">Download PDF</button>
+    </div>
+  </article>
+
+</div>
+
+<footer>
+  <p>© 2026 Catalina Mihail · UNSTPB</p>
+  <p>Interactive Portfolio · Hosted on GitHub</p>
+</footer>
+
+<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="preview-modal">
+    <div class="modal-bar">
+      <div class="modal-dots">
+        <span></span><span></span><span></span>
+      </div>
+      <p class="modal-title" id="modal-title">Document Preview</p>
+      <button class="btn-close" onclick="closePreview()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 4l8 8M12 4l-8 8"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-doc" id="modal-doc">
+    </div>
+
+    <div class="modal-footer">
+      <div class="page-nav">
+        <button id="btn-prev" onclick="changePage(-1)" disabled>← Prev</button>
+        <span class="page-indicator" id="page-indicator">1 / 3</span>
+        <button id="btn-next" onclick="changePage(1)">Next →</button>
+      </div>
+      <a class="modal-dl" href="#" id="modal-dl-link">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 2v8M5 7l3 3 3-3M3 13h10"/>
+        </svg>
+        Download PDF
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const projects = [
+  {
+    title: "Building Video Super-Resolution from the Ground Up: A Modular Pipeline Approach",
+    file: "VSR.pdf"
+  },
+  {
+    title: "Network Traffic Discrimination: VoIP vs. Non-VoIP Classification",
+    file: "PICSC.pdf"
+  }
+];
+
+let currentProject = 0;
+let currentPage = 0;
+
+function openPreview(idx) {
+  currentProject = idx;
+  currentPage = 0;
+  renderPage();
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreview() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('overlay')) closePreview();
+}
+
+function renderPage() {
+  const proj = projects[currentProject];
+  document.getElementById('modal-title').textContent = proj.title;
+  document.getElementById('modal-dl-link').href = proj.file;
+  document.getElementById('modal-doc').innerHTML = `
+    <iframe src="${proj.file}" style="width:100%;height:100%;min-height:600px;border:none;"></iframe>
+  `;
+}
+
+function changePage(dir) {
+  const proj = projects[currentProject];
+  const next = currentPage + dir;
+  if (next < 0 || next >= proj.pages.length) return;
+  currentPage = next;
+  renderPage();
+}
+
+document.addEventListener('keydown', e => {
+  const open = document.getElementById('overlay').classList.contains('open');
+  if (!open) return;
+  if (e.key === 'Escape') closePreview();
+  if (e.key === 'ArrowRight') changePage(1);
+  if (e.key === 'ArrowLeft') changePage(-1);
+});
+</script>
+</body>
+</html>
